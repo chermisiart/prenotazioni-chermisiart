@@ -101,6 +101,47 @@ footer span { color: var(--fucsia); }
 @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 .stagger { opacity:0; animation: fadeUp 0.5s ease forwards; }
 @media (max-width: 500px) { nav { gap: 0.2rem; padding: 0.5rem; } .nav-btn { font-size: 0.55rem; padding: 0.4rem 0.6rem; } }
+
+/* ── Selettore giorno/orario ── */
+.bk-daypicker { display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.3rem 0.1rem 0.8rem; scrollbar-width: thin; }
+.bk-day { flex-shrink: 0; width: 56px; text-align: center; background: var(--white); border: 1.5px solid var(--border); border-radius: 12px; padding: 0.6rem 0.3rem; cursor: pointer; transition: all 0.2s; }
+.bk-day:hover { border-color: var(--fucsia); }
+.bk-day.selected { background: linear-gradient(135deg, var(--fucsia), var(--fucsia-light)); border-color: var(--fucsia); color: white; }
+.bk-day-name { font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.bk-day.selected .bk-day-name { color: rgba(255,255,255,0.85); }
+.bk-day-num { font-family: "Playfair Display", serif; font-size: 1.2rem; font-weight: 700; color: var(--dark); margin-top: 0.1rem; }
+.bk-day.selected .bk-day-num { color: white; }
+.bk-day-dot { width: 5px; height: 5px; border-radius: 50%; margin: 0.25rem auto 0; background: #2ea043; }
+.bk-day-dot.busy { background: #e0a83c; }
+.bk-day-dot.full { background: #d4004a; }
+
+.bk-timeline-wrap { background: var(--white); border: 1.5px solid var(--border); border-radius: 14px; padding: 0.8rem; margin-top: 0.6rem; }
+.bk-timeline-hint { font-size: 0.65rem; color: var(--muted); text-align: center; margin-bottom: 0.6rem; }
+.bk-timeline { position: relative; height: 360px; overflow-y: auto; border-radius: 8px; background: repeating-linear-gradient(to bottom, rgba(212,0,122,0.05) 0, rgba(212,0,122,0.05) 1px, transparent 1px, transparent 24px); cursor: pointer; }
+.bk-timeline-hourlabel { position: absolute; left: 4px; font-size: 0.55rem; color: var(--muted); transform: translateY(-50%); pointer-events: none; }
+.bk-timeline-busy { position: absolute; left: 46px; right: 6px; background: repeating-linear-gradient(45deg, #ffd9e8, #ffd9e8 6px, #ffc2dc 6px, #ffc2dc 12px); border: 1px solid var(--fucsia-dark); border-radius: 6px; pointer-events: none; }
+.bk-timeline-busy-label { font-size: 0.55rem; color: var(--fucsia-dark); font-weight: 700; padding: 2px 6px; }
+.bk-summary { text-align: center; font-size: 0.8rem; color: var(--dark); margin-top: 0.7rem; min-height: 1.2rem; }
+.bk-summary strong { color: var(--fucsia); }
+
+/* Orologio tondo (stessa interazione del gestionale, colori fucsia) */
+.bk-clock-overlay { position: fixed; inset: 0; background: rgba(26,0,16,0.6); backdrop-filter: blur(3px); z-index: 999; display: flex; align-items: center; justify-content: center; padding: 1.2rem; }
+.bk-clock-modal { background: var(--white); border-radius: 20px; padding: 1.6rem; width: 100%; max-width: 320px; box-shadow: 0 20px 60px rgba(26,0,16,0.3); }
+.bk-clock-title { font-family: "Playfair Display", serif; font-size: 1.2rem; font-weight: 700; color: var(--dark); text-align: center; margin-bottom: 0.4rem; }
+.bk-clock-note { font-size: 0.65rem; color: var(--muted); text-align: center; margin-bottom: 0.8rem; }
+.bk-clock-display { display: flex; justify-content: center; align-items: baseline; gap: 0.2rem; font-family: "Playfair Display", serif; font-size: 2rem; font-weight: 700; color: var(--dark); margin-bottom: 1rem; }
+.bk-clock-seg { cursor: pointer; padding: 0.1rem 0.3rem; border-radius: 6px; }
+.bk-clock-seg.active { background: var(--fucsia-pale); color: var(--fucsia); }
+.bk-clock-face { position: relative; width: 220px; height: 220px; margin: 0 auto 1.2rem; border-radius: 50%; background: var(--fucsia-pale); touch-action: none; }
+.bk-clock-num { position: absolute; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.75rem; font-weight: 600; color: var(--dark); cursor: pointer; transform: translate(-50%,-50%); transition: all 0.15s; }
+.bk-clock-num.disabled { color: rgba(74,0,48,0.25); cursor: not-allowed; }
+.bk-clock-num.selected { background: var(--fucsia); color: white; }
+.bk-clock-center { position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; border-radius: 50%; background: var(--fucsia); transform: translate(-50%,-50%); z-index: 2; }
+.bk-clock-hand { position: absolute; left: 50%; bottom: 50%; width: 2px; background: var(--fucsia); transform-origin: bottom center; border-radius: 2px; }
+.bk-clock-actions { display: flex; gap: 0.6rem; justify-content: flex-end; }
+.bk-clock-btn { border: none; border-radius: 50px; padding: 0.5rem 1.1rem; font-family: "Montserrat", sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
+.bk-clock-btn.ghost { background: transparent; color: var(--muted); }
+.bk-clock-btn.primary { background: linear-gradient(135deg, var(--fucsia), var(--fucsia-light)); color: white; }
 </style>
 </head>
 <body>
@@ -677,30 +718,31 @@ footer span { color: var(--fucsia); }
       <input type="hidden" id="serviceSelect" name="Servizio di interesse" value="Consulenza generica">
       <div class="form-group">
         <label>Nome e Cognome</label>
-        <input type="text" name="Nome e Cognome" placeholder="es. Maria Rossi" required>
+        <input type="text" id="bk-nome" placeholder="es. Maria Rossi" required>
       </div>
       <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="Email" placeholder="es. maria@email.com" required>
+        <label>Telefono</label>
+        <input type="tel" id="bk-telefono" placeholder="es. 333 1234567" required>
       </div>
       <div class="form-group">
-        <label>Telefono (opzionale)</label>
-        <input type="tel" name="Telefono" placeholder="es. 333 1234567">
+        <label>Cosa vorresti prenotare</label>
+        <textarea id="bk-trattamento" placeholder="Descrivi il trattamento o il servizio che ti interessa..." required></textarea>
       </div>
       <div class="form-group">
-        <label>Giorni e orari disponibili</label>
-        <input type="text" name="Giorni e orari disponibili" placeholder="es. Lunedì e mercoledì pomeriggio, sabato mattina">
-      </div>
-      <div class="form-group">
-        <label>Messaggio</label>
-        <textarea name="Messaggio" placeholder="Descrivi brevemente cosa hai in mente o la problematica su cui vuoi lavorare..."></textarea>
+        <label>Quando preferisci</label>
+        <div class="bk-daypicker" id="bkDaypicker"></div>
+        <div class="bk-timeline-wrap" id="bkTimelineWrap" style="display:none">
+          <div class="bk-timeline-hint">Le fasce rosa sono già occupate. Tocca un orario libero per scegliere.</div>
+          <div class="bk-timeline" id="bkTimeline"></div>
+        </div>
+        <div class="bk-summary" id="bkSummary">Scegli prima un giorno qui sopra ↑</div>
       </div>
       <button type="submit" class="btn-submit">Invia Richiesta ✦</button>
     </form>
     <div class="success-box" id="successBox">
       <span class="icon">💌</span>
       <h3>Richiesta inviata!</h3>
-      <p>Ti risponderò entro 24 ore.<br>A presto, Lory</p>
+      <p>Ti risponderò entro 24 ore per confermare l'appuntamento.<br>A presto, Lory</p>
     </div>
   </div>
 </div>
@@ -723,6 +765,194 @@ function goBack() {
 
 function setServizio(nome) {
   document.getElementById('serviceSelect').value = nome;
+  const t = document.getElementById('bk-trattamento');
+  if (t && !t.value) t.value = nome;
+}
+
+// ── Prenotazione: disponibilità reale + selettore giorno/orario ──
+const BOOKING_API = 'https://us-central1-promemoria-chermisiart.cloudfunctions.net';
+const BK_DAY_NAMES = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+const BK_HOUR_START = 7, BK_HOUR_END = 22, BK_HOUR_H = 24; // px per ora (coerente con lo sfondo a righe in CSS)
+
+let bkAvailability = {};
+let bkRangeFrom = null, bkRangeTo = null;
+let bkSelectedDate = null, bkSelectedTime = null;
+
+function bkPad(n) { return String(n).padStart(2, '0'); }
+function bkDateToYMD(d) { return d.getFullYear() + '-' + bkPad(d.getMonth() + 1) + '-' + bkPad(d.getDate()); }
+function bkTimeToMin(t) { const [h, m] = t.split(':').map(Number); return h * 60 + m; }
+
+async function bkLoadAvailability() {
+  const today = new Date();
+  bkRangeFrom = bkDateToYMD(today);
+  const toDate = new Date(today); toDate.setDate(toDate.getDate() + 27);
+  bkRangeTo = bkDateToYMD(toDate);
+  try {
+    const res = await fetch(`${BOOKING_API}/getAvailability?from=${bkRangeFrom}&to=${bkRangeTo}`);
+    bkAvailability = await res.json();
+  } catch (e) {
+    console.warn('Errore caricamento disponibilità:', e);
+    bkAvailability = {};
+  }
+  bkRenderDaypicker();
+}
+
+function bkRenderDaypicker() {
+  const wrap = document.getElementById('bkDaypicker');
+  if (!wrap || !bkRangeFrom) return;
+  const days = [];
+  let d = new Date(bkRangeFrom + 'T00:00:00');
+  const end = new Date(bkRangeTo + 'T00:00:00');
+  while (d <= end) {
+    if (d.getDay() !== 0) days.push(new Date(d)); // niente domenica
+    d.setDate(d.getDate() + 1);
+  }
+  const totalMinutes = (BK_HOUR_END - BK_HOUR_START) * 60;
+  wrap.innerHTML = days.map(dt => {
+    const ds = bkDateToYMD(dt);
+    const busy = (bkAvailability[ds] && bkAvailability[ds].busy) || [];
+    const busyMin = busy.reduce((t, b) => t + Math.max(0, bkTimeToMin(b.end) - bkTimeToMin(b.start)), 0);
+    let dotCls = '';
+    if (busyMin >= totalMinutes * 0.85) dotCls = 'full';
+    else if (busyMin > 0) dotCls = 'busy';
+    return `<div class="bk-day${ds === bkSelectedDate ? ' selected' : ''}" onclick="bkSelectDay('${ds}', this)">
+      <div class="bk-day-name">${BK_DAY_NAMES[dt.getDay()]}</div>
+      <div class="bk-day-num">${dt.getDate()}</div>
+      <div class="bk-day-dot ${dotCls}"></div>
+    </div>`;
+  }).join('');
+}
+
+function bkSelectDay(ds, el) {
+  bkSelectedDate = ds;
+  bkSelectedTime = null;
+  document.querySelectorAll('.bk-day').forEach(d => d.classList.remove('selected'));
+  if (el) el.classList.add('selected');
+  document.getElementById('bkTimelineWrap').style.display = 'block';
+  bkRenderTimeline(ds);
+  bkUpdateSummary();
+}
+
+function bkRenderTimeline(ds) {
+  const el = document.getElementById('bkTimeline');
+  const busy = (bkAvailability[ds] && bkAvailability[ds].busy) || [];
+  const totalH = (BK_HOUR_END - BK_HOUR_START) * BK_HOUR_H;
+  el.style.height = totalH + 'px';
+  let html = '';
+  for (let h = BK_HOUR_START; h <= BK_HOUR_END; h++) {
+    html += `<div class="bk-timeline-hourlabel" style="top:${(h - BK_HOUR_START) * BK_HOUR_H}px">${bkPad(h)}</div>`;
+  }
+  busy.forEach(b => {
+    const startMin = Math.max(bkTimeToMin(b.start), BK_HOUR_START * 60);
+    const endMin = Math.min(Math.max(bkTimeToMin(b.end), startMin + 15), BK_HOUR_END * 60);
+    const top = ((startMin - BK_HOUR_START * 60) / 60) * BK_HOUR_H;
+    const height = Math.max(((endMin - startMin) / 60) * BK_HOUR_H, 14);
+    html += `<div class="bk-timeline-busy" style="top:${top}px;height:${height}px">${height > 20 ? '<span class="bk-timeline-busy-label">Occupato</span>' : ''}</div>`;
+  });
+  el.innerHTML = html;
+  el.onclick = (e) => bkTimelineClick(e, ds);
+}
+
+function bkTimelineClick(e, ds) {
+  if (e.target.closest('.bk-timeline-busy')) return; // click su fascia occupata, ignora
+  const rect = e.currentTarget.getBoundingClientRect();
+  const y = e.clientY - rect.top + e.currentTarget.scrollTop;
+  let totalMin = BK_HOUR_START * 60 + (y / BK_HOUR_H) * 60;
+  totalMin = Math.round(totalMin / 15) * 15;
+  totalMin = Math.max(BK_HOUR_START * 60, Math.min(BK_HOUR_END * 60 - 15, totalMin));
+  const timeStr = bkPad(Math.floor(totalMin / 60)) + ':' + bkPad(totalMin % 60);
+  if (bkIsBusy(ds, timeStr)) { bkFlashBusy(); return; }
+  bkOpenClock(ds, timeStr);
+}
+
+function bkIsBusy(ds, timeStr) {
+  const busy = (bkAvailability[ds] && bkAvailability[ds].busy) || [];
+  const t = bkTimeToMin(timeStr);
+  return busy.some(b => t >= bkTimeToMin(b.start) && t < bkTimeToMin(b.end));
+}
+function bkFlashBusy() {
+  const el = document.getElementById('bkTimelineWrap');
+  el.style.boxShadow = '0 0 0 2px var(--fucsia)';
+  setTimeout(() => { el.style.boxShadow = ''; }, 400);
+}
+function bkUpdateSummary() {
+  const el = document.getElementById('bkSummary');
+  if (!bkSelectedDate) { el.innerHTML = 'Scegli prima un giorno qui sopra ↑'; return; }
+  if (!bkSelectedTime) { el.innerHTML = 'Tocca un orario libero nella fascia qui sopra'; return; }
+  const d = new Date(bkSelectedDate + 'T12:00:00');
+  const dataFmt = d.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
+  el.innerHTML = `Hai scelto: <strong>${dataFmt} alle ${bkSelectedTime}</strong><br><span onclick="bkOpenClock(bkSelectedDate, bkSelectedTime)" style="color:var(--fucsia);cursor:pointer;text-decoration:underline;font-size:0.65rem">modifica orario</span>`;
+}
+
+// ── Orologio tondo per l'orario preciso ──
+let bkClockH = 9, bkClockM = 0, bkClockMode = 'h', bkClockDate = null;
+
+function bkOpenClock(ds, presetTime) {
+  bkClockDate = ds;
+  if (presetTime) { const p = presetTime.split(':'); bkClockH = parseInt(p[0]) || BK_HOUR_START; bkClockM = parseInt(p[1]) || 0; }
+  bkClockMode = 'h';
+  bkRenderClock();
+}
+function bkCloseClock() {
+  document.querySelectorAll('.bk-clock-overlay').forEach(e => e.remove());
+}
+function bkConfirmClock() {
+  const timeStr = bkPad(bkClockH) + ':' + bkPad(bkClockM);
+  if (bkIsBusy(bkClockDate, timeStr)) { alert('Questo orario risulta occupato, scegline un altro.'); return; }
+  bkSelectedTime = timeStr;
+  bkCloseClock();
+  bkUpdateSummary();
+}
+function bkRenderClock() {
+  document.querySelectorAll('.bk-clock-overlay').forEach(e => e.remove());
+  const overlay = document.createElement('div');
+  overlay.className = 'bk-clock-overlay';
+  overlay.onclick = (e) => { if (e.target === overlay) bkCloseClock(); };
+  overlay.innerHTML = `
+    <div class="bk-clock-modal" onclick="event.stopPropagation()">
+      <div class="bk-clock-title">Scegli l'orario preciso</div>
+      <div class="bk-clock-note">Puoi affinare l'orario scelto sulla fascia</div>
+      <div class="bk-clock-display">
+        <span class="bk-clock-seg${bkClockMode === 'h' ? ' active' : ''}" onclick="bkClockMode='h';bkRenderClock()">${bkPad(bkClockH)}</span>:<span class="bk-clock-seg${bkClockMode === 'm' ? ' active' : ''}" onclick="bkClockMode='m';bkRenderClock()">${bkPad(bkClockM)}</span>
+      </div>
+      <div class="bk-clock-face" id="bkClockFace">
+        <div class="bk-clock-center"></div>
+        <div class="bk-clock-hand" id="bkClockHand"></div>
+      </div>
+      <div class="bk-clock-actions">
+        <button class="bk-clock-btn ghost" onclick="bkCloseClock()">Annulla</button>
+        <button class="bk-clock-btn primary" onclick="bkConfirmClock()">Conferma</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+
+  const face = document.getElementById('bkClockFace');
+  const R = face.offsetWidth / 2;
+  const nums = bkClockMode === 'h'
+    ? Array.from({ length: BK_HOUR_END - BK_HOUR_START + 1 }, (_, i) => BK_HOUR_START + i)
+    : [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+  const r = R * 0.8;
+  const count = nums.length;
+  nums.forEach((n, i) => {
+    const angle = (i / count) * Math.PI * 2 - Math.PI / 2;
+    const x = R + r * Math.cos(angle);
+    const y = R + r * Math.sin(angle);
+    // Nella modalità minuti disattiva i 5-minuti che cadono in una fascia occupata per l'ora scelta
+    const disabled = bkClockMode === 'm' && bkClockDate && bkIsBusy(bkClockDate, bkPad(bkClockH) + ':' + bkPad(n));
+    const el = document.createElement('div');
+    el.className = 'bk-clock-num' + (disabled ? ' disabled' : '') + ((bkClockMode === 'h' && n === bkClockH) || (bkClockMode === 'm' && n === bkClockM) ? ' selected' : '');
+    el.textContent = n;
+    el.style.left = x + 'px'; el.style.top = y + 'px';
+    if (!disabled) el.onclick = () => { if (bkClockMode === 'h') { bkClockH = n; bkClockMode = 'm'; } else { bkClockM = n; } bkRenderClock(); };
+    face.appendChild(el);
+  });
+
+  const idx = bkClockMode === 'h' ? nums.indexOf(bkClockH) : bkClockM / 5;
+  const angle = (idx / count) * 360 - 90;
+  const hand = document.getElementById('bkClockHand');
+  hand.style.height = (R * 0.72) + 'px';
+  hand.style.marginLeft = '-1px';
+  hand.style.transform = `rotate(${angle + 90}deg)`;
 }
 
 function showSection(id, btn) {
@@ -754,32 +984,52 @@ function showSection(id, btn) {
 
 async function inviaForm(e) {
   e.preventDefault();
-  const form = document.getElementById('formView');
-  const data = new FormData(form);
+  const nome = document.getElementById('bk-nome').value.trim();
+  const telefono = document.getElementById('bk-telefono').value.trim();
+  const trattamentoBase = document.getElementById('bk-trattamento').value.trim();
+  const servizio = document.getElementById('serviceSelect').value;
+  const trattamento = (servizio && servizio !== 'Consulenza generica' && !trattamentoBase.includes(servizio))
+    ? (servizio + ' — ' + trattamentoBase) : trattamentoBase;
+
+  if (!nome || !telefono || !trattamentoBase) { alert('Compila nome, telefono e cosa vorresti prenotare.'); return; }
+  if (!bkSelectedDate || !bkSelectedTime) { alert('Scegli un giorno e un orario prima di inviare.'); return; }
+
+  const btn = document.querySelector('.btn-submit');
+  const btnTextOrig = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Invio in corso...';
+
   try {
-    const response = await fetch('https://formspree.io/f/xojpaypa', {
+    const res = await fetch(`${BOOKING_API}/submitBookingRequest`, {
       method: 'POST',
-      body: data,
-      headers: { 'Accept': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nome, telefono, trattamento, data: bkSelectedDate, ora: bkSelectedTime }),
     });
-    if (response.ok) {
+    const json = await res.json().catch(() => ({}));
+    if (res.ok && json.success) {
       document.getElementById('formView').style.display = 'none';
       document.getElementById('successBox').classList.add('show');
       setTimeout(() => {
         document.getElementById('successBox').classList.remove('show');
         document.getElementById('formView').style.display = 'block';
-        form.reset();
+        document.getElementById('formView').reset();
+        bkSelectedDate = null; bkSelectedTime = null;
+        document.getElementById('bkTimelineWrap').style.display = 'none';
+        bkRenderDaypicker();
+        bkUpdateSummary();
         goBack();
-      }, 3000);
+      }, 3500);
     } else {
-      alert('Errore nell invio. Riprova.');
+      alert('Errore nell\'invio: ' + (json.error || 'riprova tra poco.'));
     }
-  } catch(err) {
-    alert('Errore di connessione. Riprova.');
+  } catch (err) {
+    alert('Errore di connessione. Riprova tra poco.');
+  } finally {
+    btn.disabled = false; btn.textContent = btnTextOrig;
   }
 }
 
 showSection('pmu');
+bkLoadAvailability();
 </script>
 </body>
 </html>
