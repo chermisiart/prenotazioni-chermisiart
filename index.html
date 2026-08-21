@@ -1017,7 +1017,7 @@ function bkRenderClock() {
   hand.style.transform = `rotate(${angle + 90}deg)`;
 }
 
-function showSection(id, btn) {
+function showSection(id, btn, skipScroll) {
   if (id !== 'contatti') lastSection = id;
   document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
   const target = document.getElementById('sec-' + id);
@@ -1029,7 +1029,7 @@ function showSection(id, btn) {
       el.style.animation = '';
       el.style.animationDelay = (0.05 + i * 0.05) + 's';
     });
-    document.querySelector('nav').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!skipScroll) document.querySelector('nav').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
   if (btn) {
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -1090,7 +1090,7 @@ async function inviaForm(e) {
   }
 }
 
-showSection('pmu');
+showSection('pmu', null, true); // al primo caricamento resta in cima, sulla hero
 bkLoadAvailability();
 </script>
 </body>
