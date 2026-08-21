@@ -37,6 +37,8 @@ body { font-family: "Montserrat", sans-serif; background: var(--off-white); colo
 .hero-subtitle { font-family: "Playfair Display", serif; font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 400; font-style: italic; color: rgba(255,255,255,0.6); margin-bottom: 2rem; opacity: 0; animation: fadeUp 0.8s ease forwards 0.7s; }
 .hero-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.8s ease forwards 0.9s; }
 .hero-tag { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; border: 1px solid rgba(212,0,122,0.5); color: rgba(255,255,255,0.7); padding: 0.35rem 0.9rem; border-radius: 50px; }
+.hero-cta { margin-top: 1.8rem; background: linear-gradient(135deg, var(--fucsia), var(--fucsia-light)); color: white; border: none; border-radius: 50px; font-family: "Montserrat", sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 1rem 2.2rem; cursor: pointer; transition: all 0.3s ease; opacity: 0; animation: fadeUp 0.8s ease forwards 1.1s; box-shadow: 0 10px 30px rgba(212,0,122,0.35); }
+.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(212,0,122,0.5); }
 
 nav { position: sticky; top: 0; z-index: 50; background: rgba(253,245,251,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 0 1rem; display: flex; align-items: center; justify-content: center; gap: 0.3rem; flex-wrap: wrap; min-height: 56px; }
 .nav-btn { background: none; border: none; font-family: "Montserrat", sans-serif; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); padding: 0.5rem 0.8rem; cursor: pointer; border-radius: 50px; transition: all 0.3s; white-space: nowrap; }
@@ -102,18 +104,29 @@ footer span { color: var(--fucsia); }
 .stagger { opacity:0; animation: fadeUp 0.5s ease forwards; }
 @media (max-width: 500px) { nav { gap: 0.2rem; padding: 0.5rem; } .nav-btn { font-size: 0.55rem; padding: 0.4rem 0.6rem; } }
 
-/* ── Selettore giorno/orario ── */
-.bk-daypicker { display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.3rem 0.1rem 0.8rem; scrollbar-width: thin; }
-.bk-day { flex-shrink: 0; width: 56px; text-align: center; background: var(--white); border: 1.5px solid var(--border); border-radius: 12px; padding: 0.6rem 0.3rem; cursor: pointer; transition: all 0.2s; }
-.bk-day:hover { border-color: var(--fucsia); }
-.bk-day.selected { background: linear-gradient(135deg, var(--fucsia), var(--fucsia-light)); border-color: var(--fucsia); color: white; }
-.bk-day-name { font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-.bk-day.selected .bk-day-name { color: rgba(255,255,255,0.85); }
-.bk-day-num { font-family: "Playfair Display", serif; font-size: 1.2rem; font-weight: 700; color: var(--dark); margin-top: 0.1rem; }
-.bk-day.selected .bk-day-num { color: white; }
-.bk-day-dot { width: 5px; height: 5px; border-radius: 50%; margin: 0.25rem auto 0; background: #2ea043; }
-.bk-day-dot.busy { background: #e0a83c; }
-.bk-day-dot.full { background: #d4004a; }
+/* ── Selettore giorno/orario: calendario mensile ── */
+.bk-cal { background: var(--white); border: 1.5px solid var(--border); border-radius: 14px; padding: 0.9rem; }
+.bk-cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.7rem; }
+.bk-cal-navbtn { background: var(--fucsia-pale); border: none; color: var(--fucsia); width: 30px; height: 30px; border-radius: 50%; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.bk-cal-navbtn:hover { background: var(--fucsia); color: white; }
+.bk-cal-navbtn:disabled { opacity: 0.3; cursor: not-allowed; }
+.bk-cal-navbtn:disabled:hover { background: var(--fucsia-pale); color: var(--fucsia); }
+.bk-cal-title { font-family: "Playfair Display", serif; font-size: 1.05rem; font-weight: 700; color: var(--dark); text-transform: capitalize; }
+.bk-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.25rem; }
+.bk-cal-daylabel { text-align: center; font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-bottom: 0.3rem; }
+.bk-cal-cell { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 10px; cursor: pointer; transition: all 0.15s; position: relative; }
+.bk-cal-cell.other { visibility: hidden; }
+.bk-cal-cell.off { color: rgba(74,0,48,0.2); cursor: not-allowed; }
+.bk-cal-cell:not(.off):not(.other):hover { background: var(--fucsia-pale); }
+.bk-cal-cell-num { font-family: "Playfair Display", serif; font-size: 0.9rem; font-weight: 700; color: var(--dark); }
+.bk-cal-cell.off .bk-cal-cell-num { color: rgba(74,0,48,0.25); }
+.bk-cal-cell.selected { background: linear-gradient(135deg, var(--fucsia), var(--fucsia-light)); }
+.bk-cal-cell.selected .bk-cal-cell-num { color: white; }
+.bk-cal-cell.today:not(.selected) { box-shadow: inset 0 0 0 1.5px var(--fucsia); }
+.bk-cal-cell-dot { width: 4px; height: 4px; border-radius: 50%; margin-top: 2px; background: #2ea043; }
+.bk-cal-cell-dot.busy { background: #e0a83c; }
+.bk-cal-cell-dot.full { background: #d4004a; }
+.bk-cal-cell.selected .bk-cal-cell-dot { background: rgba(255,255,255,0.85); }
 
 .bk-timeline-wrap { background: var(--white); border: 1.5px solid var(--border); border-radius: 14px; padding: 0.8rem; margin-top: 0.6rem; }
 .bk-timeline-hint { font-size: 0.65rem; color: var(--muted); text-align: center; margin-bottom: 0.6rem; }
@@ -121,8 +134,14 @@ footer span { color: var(--fucsia); }
 .bk-timeline-hourlabel { position: absolute; left: 4px; font-size: 0.55rem; color: var(--muted); transform: translateY(-50%); pointer-events: none; }
 .bk-timeline-busy { position: absolute; left: 46px; right: 6px; background: repeating-linear-gradient(45deg, #ffd9e8, #ffd9e8 6px, #ffc2dc 6px, #ffc2dc 12px); border: 1px solid var(--fucsia-dark); border-radius: 6px; pointer-events: none; }
 .bk-timeline-busy-label { font-size: 0.55rem; color: var(--fucsia-dark); font-weight: 700; padding: 2px 6px; }
-.bk-summary { text-align: center; font-size: 0.8rem; color: var(--dark); margin-top: 0.7rem; min-height: 1.2rem; }
-.bk-summary strong { color: var(--fucsia); }
+.bk-summary { text-align: center; font-size: 0.75rem; color: var(--muted); margin-top: 0.7rem; min-height: 1.2rem; }
+.bk-summary-card { display: flex; align-items: center; gap: 0.9rem; background: linear-gradient(135deg, var(--fucsia), var(--fucsia-light)); border-radius: 16px; padding: 1.1rem 1.3rem; margin-top: 0.8rem; box-shadow: 0 10px 30px rgba(212,0,122,0.3); animation: bkPop 0.35s ease; }
+.bk-summary-card-icon { font-size: 1.8rem; flex-shrink: 0; }
+.bk-summary-card-label { font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-bottom: 0.15rem; }
+.bk-summary-card-value { font-family: "Playfair Display", serif; font-size: 1.3rem; font-weight: 700; color: white; line-height: 1.2; }
+.bk-summary-card-edit { margin-left: auto; background: rgba(255,255,255,0.2); border: none; color: white; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.5rem 0.8rem; border-radius: 50px; cursor: pointer; flex-shrink: 0; white-space: nowrap; }
+.bk-summary-card-edit:hover { background: rgba(255,255,255,0.32); }
+@keyframes bkPop { from { transform: scale(0.92); opacity: 0.4; } to { transform: scale(1); opacity: 1; } }
 
 /* Orologio tondo (stessa interazione del gestionale, colori fucsia) */
 .bk-clock-overlay { position: fixed; inset: 0; background: rgba(26,0,16,0.6); backdrop-filter: blur(3px); z-index: 999; display: flex; align-items: center; justify-content: center; padding: 1.2rem; }
@@ -161,6 +180,7 @@ footer span { color: var(--fucsia); }
       <span class="hero-tag">Massaggi</span>
       <span class="hero-tag">Estetica Avanzata</span>
     </div>
+    <button class="hero-cta" onclick="showSection('contatti')">Prenota ora ✦</button>
   </div>
 </section>
 
@@ -171,7 +191,7 @@ footer span { color: var(--fucsia); }
   <button class="nav-btn" onclick="showSection('corpo', this)">Corpo</button>
   <button class="nav-btn" onclick="showSection('unghie', this)">Unghie &amp; Ceretta</button>
   <button class="nav-btn" onclick="showSection('chisono', this)">Chi Sono</button>
-  <button class="nav-btn" onclick="showSection('contatti', this)">Contatti</button>
+  <button class="nav-btn" onclick="showSection('contatti', this)">Prenota</button>
 </nav>
 
 <!-- PMU & INK -->
@@ -730,7 +750,7 @@ footer span { color: var(--fucsia); }
       </div>
       <div class="form-group">
         <label>Quando preferisci</label>
-        <div class="bk-daypicker" id="bkDaypicker"></div>
+        <div class="bk-cal" id="bkCalendar"></div>
         <div class="bk-timeline-wrap" id="bkTimelineWrap" style="display:none">
           <div class="bk-timeline-hint">Le fasce rosa sono già occupate. Tocca un orario libero per scegliere.</div>
           <div class="bk-timeline" id="bkTimeline"></div>
@@ -769,14 +789,16 @@ function setServizio(nome) {
   if (t && !t.value) t.value = nome;
 }
 
-// ── Prenotazione: disponibilità reale + selettore giorno/orario ──
+// ── Prenotazione: disponibilità reale + calendario mensile ──
 const BOOKING_API = 'https://us-central1-promemoria-chermisiart.cloudfunctions.net';
-const BK_DAY_NAMES = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+const BK_MONTH_NAMES = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+const BK_DAY_LABELS = ['Lun','Mar','Mer','Gio','Ven','Sab','Dom'];
 const BK_HOUR_START = 7, BK_HOUR_END = 22, BK_HOUR_H = 24; // px per ora (coerente con lo sfondo a righe in CSS)
 
-let bkAvailability = {};
-let bkRangeFrom = null, bkRangeTo = null;
+let bkAvailability = {};       // cache per data: { 'YYYY-MM-DD': { busy:[...] } }
+let bkFetchedMonths = new Set(); // mesi 'YYYY-MM' già scaricati, evita richieste ripetute
 let bkSelectedDate = null, bkSelectedTime = null;
+let bkCalYear, bkCalMonth; // mese attualmente mostrato nel calendario
 
 function bkPad(n) { return String(n).padStart(2, '0'); }
 function bkDateToYMD(d) { return d.getFullYear() + '-' + bkPad(d.getMonth() + 1) + '-' + bkPad(d.getDate()); }
@@ -784,49 +806,75 @@ function bkTimeToMin(t) { const [h, m] = t.split(':').map(Number); return h * 60
 
 async function bkLoadAvailability() {
   const today = new Date();
-  bkRangeFrom = bkDateToYMD(today);
-  const toDate = new Date(today); toDate.setDate(toDate.getDate() + 27);
-  bkRangeTo = bkDateToYMD(toDate);
-  try {
-    const res = await fetch(`${BOOKING_API}/getAvailability?from=${bkRangeFrom}&to=${bkRangeTo}`);
-    bkAvailability = await res.json();
-  } catch (e) {
-    console.warn('Errore caricamento disponibilità:', e);
-    bkAvailability = {};
-  }
-  bkRenderDaypicker();
+  bkCalYear = today.getFullYear();
+  bkCalMonth = today.getMonth();
+  await bkFetchMonth(bkCalYear, bkCalMonth);
+  bkRenderCalendar();
 }
 
-function bkRenderDaypicker() {
-  const wrap = document.getElementById('bkDaypicker');
-  if (!wrap || !bkRangeFrom) return;
-  const days = [];
-  let d = new Date(bkRangeFrom + 'T00:00:00');
-  const end = new Date(bkRangeTo + 'T00:00:00');
-  while (d <= end) {
-    if (d.getDay() !== 0) days.push(new Date(d)); // niente domenica
-    d.setDate(d.getDate() + 1);
+async function bkFetchMonth(year, month) {
+  const key = year + '-' + bkPad(month + 1);
+  if (bkFetchedMonths.has(key)) return;
+  const from = key + '-01';
+  const to = key + '-' + bkPad(new Date(year, month + 1, 0).getDate());
+  try {
+    const res = await fetch(`${BOOKING_API}/getAvailability?from=${from}&to=${to}`);
+    Object.assign(bkAvailability, await res.json());
+    bkFetchedMonths.add(key);
+  } catch (e) {
+    console.warn('Errore caricamento disponibilità:', e);
   }
+}
+
+async function bkCalPrev() { bkCalMonth--; if (bkCalMonth < 0) { bkCalMonth = 11; bkCalYear--; } await bkFetchMonth(bkCalYear, bkCalMonth); bkRenderCalendar(); }
+async function bkCalNext() { bkCalMonth++; if (bkCalMonth > 11) { bkCalMonth = 0; bkCalYear++; } await bkFetchMonth(bkCalYear, bkCalMonth); bkRenderCalendar(); }
+
+function bkRenderCalendar() {
+  const wrap = document.getElementById('bkCalendar');
+  if (!wrap) return;
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const todayStr = bkDateToYMD(today);
+  const isCurrentMonth = (bkCalYear === today.getFullYear() && bkCalMonth === today.getMonth());
+  const firstDay = new Date(bkCalYear, bkCalMonth, 1);
+  const startOffset = (firstDay.getDay() + 6) % 7; // lun=0
+  const daysInMonth = new Date(bkCalYear, bkCalMonth + 1, 0).getDate();
   const totalMinutes = (BK_HOUR_END - BK_HOUR_START) * 60;
-  wrap.innerHTML = days.map(dt => {
+
+  let cells = '';
+  for (let i = 0; i < startOffset; i++) cells += `<div class="bk-cal-cell other"></div>`;
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dt = new Date(bkCalYear, bkCalMonth, d);
     const ds = bkDateToYMD(dt);
-    const busy = (bkAvailability[ds] && bkAvailability[ds].busy) || [];
-    const busyMin = busy.reduce((t, b) => t + Math.max(0, bkTimeToMin(b.end) - bkTimeToMin(b.start)), 0);
+    const off = ds < todayStr || dt.getDay() === 0; // passato o domenica
     let dotCls = '';
-    if (busyMin >= totalMinutes * 0.85) dotCls = 'full';
-    else if (busyMin > 0) dotCls = 'busy';
-    return `<div class="bk-day${ds === bkSelectedDate ? ' selected' : ''}" onclick="bkSelectDay('${ds}', this)">
-      <div class="bk-day-name">${BK_DAY_NAMES[dt.getDay()]}</div>
-      <div class="bk-day-num">${dt.getDate()}</div>
-      <div class="bk-day-dot ${dotCls}"></div>
+    if (!off) {
+      const busy = (bkAvailability[ds] && bkAvailability[ds].busy) || [];
+      const busyMin = busy.reduce((t, b) => t + Math.max(0, bkTimeToMin(b.end) - bkTimeToMin(b.start)), 0);
+      if (busyMin >= totalMinutes * 0.85) dotCls = 'full';
+      else if (busyMin > 0) dotCls = 'busy';
+    }
+    cells += `<div class="bk-cal-cell${off ? ' off' : ''}${ds === bkSelectedDate ? ' selected' : ''}${ds === todayStr ? ' today' : ''}"${off ? '' : ` onclick="bkSelectDay('${ds}', this)"`}>
+      <div class="bk-cal-cell-num">${d}</div>
+      ${!off ? `<div class="bk-cal-cell-dot ${dotCls}"></div>` : ''}
     </div>`;
-  }).join('');
+  }
+
+  wrap.innerHTML = `
+    <div class="bk-cal-header">
+      <button class="bk-cal-navbtn" onclick="bkCalPrev()"${isCurrentMonth ? ' disabled' : ''}>‹</button>
+      <div class="bk-cal-title">${BK_MONTH_NAMES[bkCalMonth]} ${bkCalYear}</div>
+      <button class="bk-cal-navbtn" onclick="bkCalNext()">›</button>
+    </div>
+    <div class="bk-cal-grid">
+      ${BK_DAY_LABELS.map(l => `<div class="bk-cal-daylabel">${l}</div>`).join('')}
+      ${cells}
+    </div>`;
 }
 
 function bkSelectDay(ds, el) {
   bkSelectedDate = ds;
   bkSelectedTime = null;
-  document.querySelectorAll('.bk-day').forEach(d => d.classList.remove('selected'));
+  document.querySelectorAll('.bk-cal-cell').forEach(d => d.classList.remove('selected'));
   if (el) el.classList.add('selected');
   document.getElementById('bkTimelineWrap').style.display = 'block';
   bkRenderTimeline(ds);
@@ -877,11 +925,18 @@ function bkFlashBusy() {
 }
 function bkUpdateSummary() {
   const el = document.getElementById('bkSummary');
-  if (!bkSelectedDate) { el.innerHTML = 'Scegli prima un giorno qui sopra ↑'; return; }
+  if (!bkSelectedDate) { el.innerHTML = 'Scegli un giorno dal calendario qui sopra ↑'; return; }
   if (!bkSelectedTime) { el.innerHTML = 'Tocca un orario libero nella fascia qui sopra'; return; }
   const d = new Date(bkSelectedDate + 'T12:00:00');
   const dataFmt = d.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
-  el.innerHTML = `Hai scelto: <strong>${dataFmt} alle ${bkSelectedTime}</strong><br><span onclick="bkOpenClock(bkSelectedDate, bkSelectedTime)" style="color:var(--fucsia);cursor:pointer;text-decoration:underline;font-size:0.65rem">modifica orario</span>`;
+  el.innerHTML = `<div class="bk-summary-card">
+    <span class="bk-summary-card-icon">📅</span>
+    <div>
+      <div class="bk-summary-card-label">Hai scelto</div>
+      <div class="bk-summary-card-value">${dataFmt}<br>ore ${bkSelectedTime}</div>
+    </div>
+    <button type="button" class="bk-summary-card-edit" onclick="bkOpenClock(bkSelectedDate, bkSelectedTime)">Modifica</button>
+  </div>`;
 }
 
 // ── Orologio tondo per l'orario preciso ──
@@ -1014,7 +1069,7 @@ async function inviaForm(e) {
         document.getElementById('formView').reset();
         bkSelectedDate = null; bkSelectedTime = null;
         document.getElementById('bkTimelineWrap').style.display = 'none';
-        bkRenderDaypicker();
+        bkRenderCalendar();
         bkUpdateSummary();
         goBack();
       }, 3500);
